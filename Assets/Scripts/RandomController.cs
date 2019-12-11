@@ -1,16 +1,76 @@
 ﻿using System.Collections;
+using System.IO;
 using UnityEngine;
 
 public class RandomController : MonoBehaviour {
+
+    static readonly int IMAGES_PER_OBJECT = 3;
+
+    int currChild;
+    int currImageNum;
 
     void Start() {
         StartCoroutine(RandomRoutine());
     }
 
     IEnumerator RandomRoutine() {
+        yield return new WaitForEndOfFrame();
+        ActivateCurrChild();
         while (true) {
             ChangeAllItems();
-            yield return new WaitForSeconds(.5f);
+            CheckForPicture();
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    void ActivateCurrChild() {
+
+        currImageNum = 0;
+
+        foreach (Transform child in transform) {
+            if (child.GetSiblingIndex() == currChild) {
+                child.gameObject.SetActive(true);
+            } else {
+                child.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void CheckForPicture() {
+
+        if (currChild >= transform.childCount) {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.Log("Training complete!");
+            return;
+        }
+
+        ObjectToTrain currObject = transform.GetChild(currChild).GetComponent<ObjectToTrain>();
+        if (currObject.IsVisible()) {
+            TakePicture(currObject);
+        }
+    }
+
+    void TakePicture(ObjectToTrain currObject) {
+        currImageNum++;
+
+        //create folder for images if it doesn't exist
+        string filePath = Application.streamingAssetsPath + "/" + currObject.name;
+        if (!File.Exists(filePath)) {
+            Directory.CreateDirectory(filePath);
+        }
+
+        //take picture
+        Debug.Log("taking picture num: " + currImageNum);
+        Texture2D photo = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        photo.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0, false);
+        photo.Apply();
+        byte[] data = photo.EncodeToJPG(80);
+        DestroyImmediate(photo);
+        File.WriteAllBytes(filePath + "/" + currImageNum + ".jpg", data);
+
+        if (currImageNum >= IMAGES_PER_OBJECT) {
+            currChild++;
+            ActivateCurrChild();
         }
     }
 

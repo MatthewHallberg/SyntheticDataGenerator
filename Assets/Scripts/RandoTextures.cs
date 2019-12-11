@@ -4,7 +4,8 @@ public class RandoTextures : Singleton<RandoTextures> {
 
     Object[] textures;
 
-    void Start() {
+    protected override void Awake() {
+        base.Awake();
         textures = Resources.LoadAll("Textures", typeof(Texture));
     }
 
