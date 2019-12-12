@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomController : MonoBehaviour {
 
-    static readonly int IMAGES_PER_OBJECT = 3;
+    static readonly int IMAGES_PER_OBJECT = 25;
 
     int currChild;
     int currImageNum;
@@ -14,8 +14,8 @@ public class RandomController : MonoBehaviour {
     }
 
     IEnumerator RandomRoutine() {
-        yield return new WaitForEndOfFrame();
         ActivateCurrChild();
+        yield return new WaitForEndOfFrame();
         while (true) {
             ChangeAllItems();
             CheckForPicture();
@@ -44,14 +44,15 @@ public class RandomController : MonoBehaviour {
             return;
         }
 
-        ObjectToTrain currObject = transform.GetChild(currChild).GetComponent<ObjectToTrain>();
-        if (currObject.IsVisible()) {
-            TakePicture(currObject);
-        }
+        TakePicture();
     }
 
-    void TakePicture(ObjectToTrain currObject) {
+    void TakePicture() {
         currImageNum++;
+
+        Transform currObject = transform.GetChild(currChild);
+
+        Camera.main.transform.LookAt(currObject);
 
         //create folder for images if it doesn't exist
         string filePath = Application.streamingAssetsPath + "/" + currObject.name;
