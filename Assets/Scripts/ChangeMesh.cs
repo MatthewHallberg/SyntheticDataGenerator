@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ChangeMesh : MonoBehaviour, IChangeable {
 
-    public float range = .2f;
+    const float range = .1f;
 
     Mesh originalMesh;
 
     void Start() {
-        originalMesh = GetComponent<MeshFilter>().sharedMesh;
+        originalMesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
     }
 
     public void ChangeRandom() {
@@ -28,6 +28,12 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
         clonedMesh.uv6 = originalMesh.uv6;
         clonedMesh.uv7 = originalMesh.uv7;
         clonedMesh.uv8 = originalMesh.uv8;
+        clonedMesh.subMeshCount = originalMesh.subMeshCount;
+
+        //set submesh triangles or texture gets all screwed up
+        for (int i = 0; i < clonedMesh.subMeshCount; i++) {
+            clonedMesh.SetTriangles(originalMesh.GetTriangles(i),i);
+        }
 
         //get current verts
         List<Vector3> tempVerts = new List<Vector3>();
@@ -53,10 +59,13 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
         }
 
         clonedMesh.SetVertices(tempVerts);
-        GetComponent<MeshFilter>().sharedMesh = clonedMesh;
+        clonedMesh.RecalculateBounds();
+        clonedMesh.RecalculateNormals();
+        clonedMesh.RecalculateTangents();
+        GetComponent<SkinnedMeshRenderer>().sharedMesh = clonedMesh;
     }
 
     void OnApplicationQuit() {
-        GetComponent<MeshFilter>().sharedMesh = originalMesh;
+        GetComponent<SkinnedMeshRenderer>().sharedMesh = originalMesh;
     }
 }

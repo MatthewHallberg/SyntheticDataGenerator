@@ -9,7 +9,7 @@ public class TestRandom : MonoBehaviour {
     }
 
     void MakeRandom() {
-        foreach (IChangeable item in GetComponents<IChangeable>()) {
+        foreach (IChangeable item in GetComponentsInChildren<IChangeable>()) {
             if (item != null) {
                 item.ChangeRandom();
             }
