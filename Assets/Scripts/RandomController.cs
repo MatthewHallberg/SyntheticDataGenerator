@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomController : MonoBehaviour {
 
-    static readonly int IMAGES_PER_OBJECT = 25;
+    static readonly int IMAGES_PER_OBJECT = 100;
 
     int currChild;
     int currImageNum;
