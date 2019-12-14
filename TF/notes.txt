@@ -1,6 +1,6 @@
 
 
-python3 retrain.py --image_dir photos --how_many_training_steps 25
+python3 retrain.py --image_dir photos --how_many_training_steps 4000
 
 
-python3 classify.py
+python3 classify.py --image test/1.png

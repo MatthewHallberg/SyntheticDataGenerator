@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RandomController : MonoBehaviour {
 
-    static readonly int IMAGES_PER_OBJECT = 100;
+    static readonly int IMAGES_PER_OBJECT = 5;
 
     int currChild;
     int currImageNum;
 
     void Start() {
-        StartCoroutine(RandomRoutine());
+        //StartCoroutine(RandomRoutine());
     }
 
     IEnumerator RandomRoutine() {
@@ -53,6 +53,7 @@ public class RandomController : MonoBehaviour {
         Transform currObject = transform.GetChild(currChild);
 
         Camera.main.transform.LookAt(currObject);
+        Camera.main.transform.eulerAngles += new Vector3(-20, 0, 0);
 
         //create folder for images if it doesn't exist
         string filePath = Application.streamingAssetsPath + "/" + currObject.name;
@@ -77,9 +78,11 @@ public class RandomController : MonoBehaviour {
 
     void ChangeAllItems() {
         foreach (GameObject item in FindObjectsOfType<GameObject>()) {
-            IChangeable changeableItem = item.GetComponent<IChangeable>();
-            if (changeableItem != null) {
-                changeableItem.ChangeRandom();
+            IChangeable[] changeableItems = item.GetComponents<IChangeable>();
+            foreach (IChangeable changeable in changeableItems) {
+                if (changeable != null) {
+                    changeable.ChangeRandom();
+                }
             }
         }
     }
