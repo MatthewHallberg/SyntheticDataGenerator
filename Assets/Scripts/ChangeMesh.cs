@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class ChangeMesh : MonoBehaviour, IChangeable {
 
-    const float range = .1f;
+    const float range = .2f;
 
     Mesh originalMesh;
 
     void Start() {
-        originalMesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        originalMesh = GetComponent<MeshFilter>().mesh;
     }
 
     public void ChangeRandom() {
-
-        //dont always change just in case it matters
-        if (Random.Range(0,3) > 1) {
-            GetComponent<SkinnedMeshRenderer>().sharedMesh = originalMesh;
-            return;
-        }
 
         Mesh clonedMesh = new Mesh();
         //copy mesh
@@ -42,37 +36,41 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
             clonedMesh.SetTriangles(originalMesh.GetTriangles(i),i);
         }
 
-        //get current verts
-        List<Vector3> tempVerts = new List<Vector3>();
-        clonedMesh.GetVertices(tempVerts);
+        //dont always change just in case it matters
+        if (Random.Range(0, 7) < 4) {
 
-        List<Vector3> relatedVerts = tempVerts.GroupBy(x => x)
-              .Where(g => g.Count() > 1)
-              .Select(y => y.Key)
-              .ToList();
+            //get current verts
+            List<Vector3> tempVerts = new List<Vector3>();
+            clonedMesh.GetVertices(tempVerts);
 
-        foreach (Vector3 vert in relatedVerts) {
-            Vector3 currVert = vert;
-            currVert.x += Random.Range(0f, range);
-            currVert.y += Random.Range(0f, range);
-            currVert.z += Random.Range(0f, range);
+            List<Vector3> relatedVerts = tempVerts.GroupBy(x => x)
+                  .Where(g => g.Count() > 1)
+                  .Select(y => y.Key)
+                  .ToList();
 
-            //replace all similar verts with updated random position
-            for (int i = 0; i < tempVerts.Count; i++) {
-                if (tempVerts[i] == vert) {
-                    tempVerts[i] = currVert;
+            foreach (Vector3 vert in relatedVerts) {
+                Vector3 currVert = vert;
+                currVert.x += Random.Range(0f, range);
+                currVert.y += Random.Range(0f, range);
+                currVert.z += Random.Range(0f, range);
+
+                //replace all similar verts with updated random position
+                for (int i = 0; i < tempVerts.Count; i++) {
+                    if (tempVerts[i] == vert) {
+                        tempVerts[i] = currVert;
+                    }
                 }
             }
+            clonedMesh.SetVertices(tempVerts);
         }
 
-        clonedMesh.SetVertices(tempVerts);
         clonedMesh.RecalculateBounds();
         clonedMesh.RecalculateNormals();
         clonedMesh.RecalculateTangents();
-        GetComponent<SkinnedMeshRenderer>().sharedMesh = clonedMesh;
+        GetComponent<MeshFilter>().mesh = clonedMesh;
     }
 
     void OnApplicationQuit() {
-        GetComponent<SkinnedMeshRenderer>().sharedMesh = originalMesh;
+        GetComponent<MeshFilter>().mesh = originalMesh;
     }
 }

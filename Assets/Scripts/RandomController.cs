@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomController : Singleton<RandomController> {
 
-    static readonly int IMAGES_PER_OBJECT = 500;
+    static readonly int IMAGES_PER_OBJECT = 400;
 
     int currChild;
     int currImageNum;
@@ -62,8 +62,15 @@ public class RandomController : Singleton<RandomController> {
 
         //take picture
         Debug.Log("taking picture num: " + currImageNum);
-        Texture2D photo = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        photo.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0, false);
+
+        //random image size
+        float width = Screen.width;
+        float height = Screen.height;
+        int randWith = Mathf.RoundToInt(Random.Range(width/1.5f, width));
+        int randHeight = Mathf.RoundToInt(Random.Range(height / 1.5f, height));
+        //take photo from active rend texture
+        Texture2D photo = new Texture2D(randWith, randHeight, TextureFormat.RGB24, false);
+        photo.ReadPixels(new Rect(0, 0, randWith, randHeight), 0, 0, false);
         photo.Apply();
         byte[] data = photo.EncodeToJPG(80);
         DestroyImmediate(photo);
