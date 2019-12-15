@@ -2,15 +2,15 @@
 using System.IO;
 using UnityEngine;
 
-public class RandomController : MonoBehaviour {
+public class RandomController : Singleton<RandomController> {
 
-    static readonly int IMAGES_PER_OBJECT = 5;
+    static readonly int IMAGES_PER_OBJECT = 500;
 
     int currChild;
     int currImageNum;
 
     void Start() {
-        //StartCoroutine(RandomRoutine());
+        StartCoroutine(RandomRoutine());
     }
 
     IEnumerator RandomRoutine() {
@@ -52,8 +52,7 @@ public class RandomController : MonoBehaviour {
 
         Transform currObject = transform.GetChild(currChild);
 
-        Camera.main.transform.LookAt(currObject);
-        Camera.main.transform.eulerAngles += new Vector3(-20, 0, 0);
+        ChangeCamera.Instance.UpdateCamera(currObject);
 
         //create folder for images if it doesn't exist
         string filePath = Application.streamingAssetsPath + "/" + currObject.name;

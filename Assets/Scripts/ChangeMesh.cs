@@ -13,6 +13,13 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
     }
 
     public void ChangeRandom() {
+
+        //dont always change just in case it matters
+        if (Random.Range(0,3) > 1) {
+            GetComponent<SkinnedMeshRenderer>().sharedMesh = originalMesh;
+            return;
+        }
+
         Mesh clonedMesh = new Mesh();
         //copy mesh
         clonedMesh.vertices = originalMesh.vertices;

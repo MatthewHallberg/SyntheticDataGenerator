@@ -4,7 +4,7 @@ public class TestRandom : MonoBehaviour {
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
-            MakeRandom();
+            ChangeAllItems();
         }
     }
 
@@ -13,6 +13,20 @@ public class TestRandom : MonoBehaviour {
             if (item != null) {
                 item.ChangeRandom();
             }
+            Camera.main.transform.LookAt(transform.GetChild(0));
+            Camera.main.transform.eulerAngles += new Vector3(-15, 0, 0);
         }
+    }
+
+    void ChangeAllItems() {
+        foreach (GameObject item in FindObjectsOfType<GameObject>()) {
+            IChangeable[] changeableItems = item.GetComponents<IChangeable>();
+            foreach (IChangeable changeable in changeableItems) {
+                if (changeable != null) {
+                    changeable.ChangeRandom();
+                }
+            }
+        }
+        ChangeCamera.Instance.UpdateCamera(transform.GetChild(0));
     }
 }
