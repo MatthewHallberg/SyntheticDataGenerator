@@ -28,5 +28,6 @@ public class TestRandom : MonoBehaviour {
             }
         }
         ChangeCamera.Instance.UpdateCamera(transform.GetChild(0));
+        transform.GetChild(0).GetComponent<ObjectBounds>().UpdateBounds();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomController : Singleton<RandomController> {
 
-    static readonly int IMAGES_PER_OBJECT = 400;
+    static readonly int IMAGES_PER_OBJECT = 700;
 
     int currChild;
     int currImageNum;
@@ -53,6 +53,7 @@ public class RandomController : Singleton<RandomController> {
         Transform currObject = transform.GetChild(currChild);
 
         ChangeCamera.Instance.UpdateCamera(currObject);
+        currObject.GetComponent<ObjectBounds>().UpdateBounds();
 
         //create folder for images if it doesn't exist
         string filePath = Application.streamingAssetsPath + "/" + currObject.name;
@@ -66,8 +67,8 @@ public class RandomController : Singleton<RandomController> {
         //random image size
         float width = Screen.width;
         float height = Screen.height;
-        int randWith = Mathf.RoundToInt(Random.Range(width/1.5f, width));
-        int randHeight = Mathf.RoundToInt(Random.Range(height / 1.5f, height));
+        int randWith = Mathf.RoundToInt(Random.Range(width/2f, width));
+        int randHeight = Mathf.RoundToInt(Random.Range(height / 2f, height));
         //take photo from active rend texture
         Texture2D photo = new Texture2D(randWith, randHeight, TextureFormat.RGB24, false);
         photo.ReadPixels(new Rect(0, 0, randWith, randHeight), 0, 0, false);

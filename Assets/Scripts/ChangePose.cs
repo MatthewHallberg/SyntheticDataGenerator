@@ -2,7 +2,7 @@
 
 public class ChangePose : MonoBehaviour, IChangeable {
 
-    const float MOVE_AMOUNT = 3f;
+    const float MOVE_AMOUNT = 5f;
 
     public void ChangeRandom() {
         //go through all child transforms recursively and slighty change pose

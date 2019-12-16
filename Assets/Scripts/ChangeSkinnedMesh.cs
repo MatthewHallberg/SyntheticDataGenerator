@@ -2,14 +2,14 @@
 using System.Linq;
 using UnityEngine;
 
-public class ChangeMesh : MonoBehaviour, IChangeable {
+public class ChangeSkinnedMesh : MonoBehaviour, IChangeable {
 
-    const float range = .2f;
+    const float range = .1f;
 
     Mesh originalMesh;
 
     void Start() {
-        originalMesh = GetComponent<MeshFilter>().mesh;
+        originalMesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
     }
 
     public void ChangeRandom() {
@@ -33,7 +33,7 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
 
         //set submesh triangles or texture gets all screwed up
         for (int i = 0; i < clonedMesh.subMeshCount; i++) {
-            clonedMesh.SetTriangles(originalMesh.GetTriangles(i),i);
+            clonedMesh.SetTriangles(originalMesh.GetTriangles(i), i);
         }
 
         //dont always change just in case it matters
@@ -67,10 +67,10 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
         clonedMesh.RecalculateBounds();
         clonedMesh.RecalculateNormals();
         clonedMesh.RecalculateTangents();
-        GetComponent<MeshFilter>().mesh = clonedMesh;
+        GetComponent<SkinnedMeshRenderer>().sharedMesh = clonedMesh;
     }
 
     void OnApplicationQuit() {
-        GetComponent<MeshFilter>().mesh = originalMesh;
+        GetComponent<SkinnedMeshRenderer>().sharedMesh = originalMesh;
     }
 }
