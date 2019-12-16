@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomController : Singleton<RandomController> {
 
-    static readonly int IMAGES_PER_OBJECT = 50;
+    static readonly int IMAGES_PER_OBJECT = 300;
 
     public Transform objectParent;
 
@@ -99,7 +99,7 @@ public class RandomController : Singleton<RandomController> {
             }
             currObject = objectParent.GetChild(currChild);
             ChangeCamera.Instance.UpdateCamera(currObject);
-            ObjectBounds.Instance.UpdateBounds(currObject, true);
+            ObjectBounds.Instance.UpdateBounds(currObject, false);
         }
     }
 }

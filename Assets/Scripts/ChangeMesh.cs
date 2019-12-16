@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChangeMesh : MonoBehaviour, IChangeable {
 
-    const float range = .1f;
+    const float range = .05f;
 
     Mesh originalMesh;
 
@@ -49,6 +49,9 @@ public class ChangeMesh : MonoBehaviour, IChangeable {
             clonedMesh.SetVertices(tempVerts);
         }
         MeshUtility.SetMesh(transform, clonedMesh);
+        clonedMesh.RecalculateBounds();
+        clonedMesh.RecalculateNormals();
+        clonedMesh.RecalculateTangents();
     }
 
     void OnApplicationQuit() {

@@ -16,7 +16,7 @@ public class ObjectBounds : Singleton<ObjectBounds> {
     void OnGUI() {
 
         if (!showBox) {
-            // return;
+            return;
         }
 
         //resize box for GUI coords
@@ -38,6 +38,38 @@ public class ObjectBounds : Singleton<ObjectBounds> {
         showBox = visualize;
         
         Vector3[] verts = MeshUtility.GetMesh(trans).vertices;
+
+        //test!!
+        //SkinnedMeshRenderer skinnedRend = transform.GetComponentInChildren<SkinnedMeshRenderer>();
+        //Mesh mesh = skinnedRend.sharedMesh;
+        //Matrix4x4[] boneMatrices = new Matrix4x4[skinnedRend.bones.Length];
+        //print("BONES" + skinnedRend.bones.Length);
+
+        //for (int i = 0; i < boneMatrices.Length; i++) {
+        //    boneMatrices[i] = skinnedRend.bones[i].localToWorldMatrix;
+        //}
+
+        //for (int i = 0; i < mesh.vertexCount; i++) {
+        //    BoneWeight weight = mesh.boneWeights[i];
+        //    Matrix4x4 m0 = boneMatrices[weight.boneIndex0];
+        //    Matrix4x4 m1 = boneMatrices[weight.boneIndex1];
+        //    Matrix4x4 m2 = boneMatrices[weight.boneIndex2];
+        //    Matrix4x4 m3 = boneMatrices[weight.boneIndex3];
+
+        //    Matrix4x4 finalMatrix = new Matrix4x4();
+
+        //    for (int n = 0; n < 16; n++) {
+        //        finalMatrix[n] =
+        //            m0[n] * weight.weight0 +
+        //            m1[n] * weight.weight1 +
+        //            m2[n] * weight.weight2 +
+        //            m3[n] * weight.weight3;
+        //    }
+
+        //    verts[i] = finalMatrix.MultiplyPoint3x4(verts[i]);
+        //    verts[i] = cam.WorldToScreenPoint(trans.TransformPoint(verts[i]));
+        //}
+        //end test
 
         //convert to world point, then screen space
         for (int i = 0; i < verts.Length; i++) {

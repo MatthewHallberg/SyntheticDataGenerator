@@ -4,14 +4,14 @@ public class MeshUtility : MonoBehaviour {
 
     public static Mesh GetMesh(Transform transform) {
         //return mesh from either skinned mesh renderer or mesh filter
-        SkinnedMeshRenderer skinnedRend = transform.GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer skinnedRend = transform.GetComponentInChildren<SkinnedMeshRenderer>();
         MeshFilter meshFilter = transform.GetComponent<MeshFilter>();
         return skinnedRend != null ? skinnedRend.sharedMesh : meshFilter.mesh;
     }
 
     public static void SetMesh(Transform desiredTrans, Mesh mesh) {
         //return mesh from either skinned mesh renderer or mesh filter
-        SkinnedMeshRenderer skinnedRend = desiredTrans.GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer skinnedRend = desiredTrans.GetComponentInChildren<SkinnedMeshRenderer>();
         MeshFilter meshFilter = desiredTrans.GetComponent<MeshFilter>();
         if (skinnedRend != null) skinnedRend.sharedMesh = mesh;
         if (meshFilter != null) meshFilter.sharedMesh = mesh;
