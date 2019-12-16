@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomController : Singleton<RandomController> {
 
-    static readonly int IMAGES_PER_OBJECT = 10;
+    static readonly int IMAGES_PER_OBJECT = 50;
 
     public Transform objectParent;
 
@@ -65,14 +65,14 @@ public class RandomController : Singleton<RandomController> {
         Rect bounds = ObjectBounds.Instance.GetBounds();
 
         //take photo from portion of screen
-        //Texture2D photoBounds = new Texture2D((int)box.width, (int)box.height, TextureFormat.RGB24, false);
-        //photoBounds.ReadPixels(box, 0, 0, false);
+        Texture2D photoBounds = new Texture2D((int)bounds.width, (int)bounds.height, TextureFormat.RGB24, false);
+        photoBounds.ReadPixels(bounds, 0, 0, false);
 
         ////take picture from full screen
-        int screenHeight = Screen.height;
-        int screenWidth = Screen.width;
-        Texture2D photoBounds = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
-        photoBounds.ReadPixels(new Rect(0, 0, screenWidth, screenHeight), 0, 0, false);
+        //int screenHeight = Screen.height;
+        //int screenWidth = Screen.width;
+        //Texture2D photoBounds = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
+        //photoBounds.ReadPixels(new Rect(0, 0, screenWidth, screenHeight), 0, 0, false);
 
         photoBounds.Apply();
         byte[] data = photoBounds.EncodeToJPG(80);

@@ -6,6 +6,7 @@ public class ObjectBounds : Singleton<ObjectBounds> {
 
     Camera cam;
     Rect currBox = new Rect();
+    Rect photoRect = new Rect();
     bool showBox = true;
 
     void Start() {
@@ -29,11 +30,6 @@ public class ObjectBounds : Singleton<ObjectBounds> {
     }
 
     public Rect GetBounds() {
-        //resize box for photo
-        Rect photoRect = currBox;
-        photoRect.height *= -1f;
-
-        print(photoRect);
         return photoRect;
     }
 
@@ -63,6 +59,8 @@ public class ObjectBounds : Singleton<ObjectBounds> {
             currBox.yMin = currBox.yMin < verts[i].y ? currBox.yMin : verts[i].y;
             currBox.yMax = currBox.yMax > verts[i].y ? currBox.yMax : verts[i].y;
         }
+
+        photoRect = currBox;
 
         currBox.yMin = Screen.height - currBox.yMin;
         currBox.yMax = Screen.height - currBox.yMax;
