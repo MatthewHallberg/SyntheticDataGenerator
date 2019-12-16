@@ -2,42 +2,27 @@
 using System.Linq;
 using UnityEngine;
 
-public class ChangeSkinnedMesh : MonoBehaviour, IChangeable {
+public class ChangeMesh : MonoBehaviour, IChangeable {
 
     const float range = .1f;
 
     Mesh originalMesh;
 
     void Start() {
-        originalMesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        originalMesh = MeshUtility.GetMesh(transform);
     }
 
     public void ChangeRandom() {
 
-        Mesh clonedMesh = new Mesh();
-        //copy mesh
-        clonedMesh.vertices = originalMesh.vertices;
-        clonedMesh.triangles = originalMesh.triangles;
-        clonedMesh.normals = originalMesh.normals;
-        clonedMesh.triangles = originalMesh.triangles;
-        clonedMesh.tangents = originalMesh.tangents;
-        clonedMesh.uv = originalMesh.uv;
-        clonedMesh.uv2 = originalMesh.uv2;
-        clonedMesh.uv3 = originalMesh.uv3;
-        clonedMesh.uv4 = originalMesh.uv4;
-        clonedMesh.uv5 = originalMesh.uv5;
-        clonedMesh.uv6 = originalMesh.uv6;
-        clonedMesh.uv7 = originalMesh.uv7;
-        clonedMesh.uv8 = originalMesh.uv8;
-        clonedMesh.subMeshCount = originalMesh.subMeshCount;
+        Mesh clonedMesh = MeshUtility.CloneMesh(originalMesh);
 
         //set submesh triangles or texture gets all screwed up
         for (int i = 0; i < clonedMesh.subMeshCount; i++) {
-            clonedMesh.SetTriangles(originalMesh.GetTriangles(i), i);
+            clonedMesh.SetTriangles(originalMesh.GetTriangles(i),i);
         }
 
         //dont always change just in case it matters
-        if (Random.Range(0, 7) < 4) {
+        if (Random.Range(0, 6) < 4) {
 
             //get current verts
             List<Vector3> tempVerts = new List<Vector3>();
@@ -63,14 +48,10 @@ public class ChangeSkinnedMesh : MonoBehaviour, IChangeable {
             }
             clonedMesh.SetVertices(tempVerts);
         }
-
-        clonedMesh.RecalculateBounds();
-        clonedMesh.RecalculateNormals();
-        clonedMesh.RecalculateTangents();
-        GetComponent<SkinnedMeshRenderer>().sharedMesh = clonedMesh;
+        MeshUtility.SetMesh(transform, clonedMesh);
     }
 
     void OnApplicationQuit() {
-        GetComponent<SkinnedMeshRenderer>().sharedMesh = originalMesh;
+        MeshUtility.SetMesh(transform, originalMesh);
     }
 }

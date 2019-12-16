@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -459,6 +460,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPosition: {x: -4, y: 0, z: 0}
   maxPosition: {x: 4, y: 2, z: 0}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab02b43187f5347c0bc3155c2a152573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectParent: {fileID: 1857175338}
 --- !u!1 &1857175337
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,8 +482,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1857175338}
-  - component: {fileID: 1857175340}
   - component: {fileID: 1857175339}
+  - component: {fileID: 1857175341}
   m_Layer: 0
   m_Name: ObjectsToTrain
   m_TagString: Untagged
@@ -504,18 +518,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f87639dc28948038c3afdf864d9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1857175340
+--- !u!114 &1857175341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857175337}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab02b43187f5347c0bc3155c2a152573, type: 3}
+  m_Script: {fileID: 11500000, guid: c8dd6940ba94c45e8869e5f254ad96fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guiSkin: {fileID: 11400000, guid: 4ddb9d8d3869249fb809d35112cefcb6, type: 2}
 --- !u!1 &4590502814916013122
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +544,6 @@ GameObject:
   - component: {fileID: 4590502814916013123}
   - component: {fileID: 4590502814916013126}
   - component: {fileID: 4590502814916013125}
-  - component: {fileID: 4590502814916013127}
   m_Layer: 0
   m_Name: Pikachu
   m_TagString: Untagged
@@ -611,19 +625,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4590502814916013122}
   m_Mesh: {fileID: -5644021529458352026, guid: 10b1c1aa9efb540b29fea3af6cc0655b, type: 3}
---- !u!114 &4590502814916013127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590502814916013122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8dd6940ba94c45e8869e5f254ad96fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guiSkin: {fileID: 11400000, guid: 4ddb9d8d3869249fb809d35112cefcb6, type: 2}
 --- !u!4 &7627127974165171390
 Transform:
   m_ObjectHideFlags: 0

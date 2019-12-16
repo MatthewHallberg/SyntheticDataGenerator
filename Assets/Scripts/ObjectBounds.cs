@@ -1,36 +1,26 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Renderer))]
-public class ObjectBounds : MonoBehaviour {
+public class ObjectBounds : Singleton<ObjectBounds> {
 
     public GUISkin guiSkin;
 
     Camera cam;
-    MeshFilter meshFilter;
-
-    Box currBox = new Box();
-
-    struct Box {
-        public float xMin;
-        public float xMax;
-        public float yMin;
-        public float yMax;
-    }
+    Rect currBox = new Rect();
+    bool showBox = true;
 
     void Start() {
-        meshFilter = GetComponent<MeshFilter>();
         cam = Camera.main;
     }
 
     void OnGUI() {
-        //convert to GUI
+
+        if (!showBox) {
+            // return;
+        }
+
+        //resize box for GUI coords
         Vector2 min = new Vector2(currBox.xMin, currBox.yMin);
         Vector2 max = new Vector2(currBox.xMax, currBox.yMax);
-
-        currBox.yMin = Screen.height - currBox.yMin;
-        currBox.yMax = Screen.height - currBox.yMax;
-
-        //Construct a rect of the min and max positions and apply some margin
         Rect rect = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
 
         //Render the box
@@ -38,25 +28,43 @@ public class ObjectBounds : MonoBehaviour {
         GUI.Box(rect, "");
     }
 
-    public void UpdateBounds() {
-        Vector3[] verts = meshFilter.mesh.vertices;
+    public Rect GetBounds() {
+        //resize box for photo
+        Rect photoRect = currBox;
+        photoRect.height *= -1f;
+
+        print(photoRect);
+        return photoRect;
+    }
+
+    public void UpdateBounds(Transform trans, bool visualize = true) {
+
+        showBox = visualize;
+        
+        Vector3[] verts = MeshUtility.GetMesh(trans).vertices;
 
         //convert to world point, then screen space
         for (int i = 0; i < verts.Length; i++) {
-            verts[i] = cam.WorldToScreenPoint(transform.TransformPoint(verts[i]));
+            verts[i] = cam.WorldToScreenPoint(trans.TransformPoint(verts[i]));
         }
 
-        //Calculate the min and max positions
-        currBox = new Box();
-        currBox.xMin = verts[0].x;
-        currBox.xMax = verts[0].x;
-        currBox.yMin = verts[0].y;
-        currBox.yMax = verts[0].y;
+        //create new box
+        currBox = new Rect {
+            xMin = verts[0].x,
+            xMax = verts[0].x,
+            yMin = verts[0].y,
+            yMax = verts[0].y
+        };
+
+        //find min and max screen space values
         for (int i = 0; i < verts.Length; i++) {
             currBox.xMin = currBox.xMin < verts[i].x ? currBox.xMin : verts[i].x;
             currBox.xMax = currBox.xMax > verts[i].x ? currBox.xMax : verts[i].x;
             currBox.yMin = currBox.yMin < verts[i].y ? currBox.yMin : verts[i].y;
             currBox.yMax = currBox.yMax > verts[i].y ? currBox.yMax : verts[i].y;
         }
+
+        currBox.yMin = Screen.height - currBox.yMin;
+        currBox.yMax = Screen.height - currBox.yMax;
     }
 }

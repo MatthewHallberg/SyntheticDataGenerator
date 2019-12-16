@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TestRandom : MonoBehaviour {
 
@@ -27,7 +28,8 @@ public class TestRandom : MonoBehaviour {
                 }
             }
         }
-        ChangeCamera.Instance.UpdateCamera(transform.GetChild(0));
-        transform.GetChild(0).GetComponent<ObjectBounds>().UpdateBounds();
+        Transform desiredObject = transform.GetChild(0);
+        ChangeCamera.Instance.UpdateCamera(desiredObject);
+        ObjectBounds.Instance.UpdateBounds(desiredObject);
     }
 }

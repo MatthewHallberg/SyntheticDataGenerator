@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class RandomController : Singleton<RandomController> {
 
-    static readonly int IMAGES_PER_OBJECT = 700;
+    static readonly int IMAGES_PER_OBJECT = 10;
+
+    public Transform objectParent;
 
     int currChild;
     int currImageNum;
+    Transform currObject;
 
     void Start() {
-        StartCoroutine(RandomRoutine());
+        ActivateCurrChild();
     }
 
-    IEnumerator RandomRoutine() {
-        ActivateCurrChild();
+    void Update() {
+        ChangeAllItems();
+    }
+
+    IEnumerator OnPostRender() {
         yield return new WaitForEndOfFrame();
-        while (true) {
-            ChangeAllItems();
-            CheckForPicture();
-            yield return new WaitForEndOfFrame();
-        }
+        CheckForPicture();
     }
 
     void ActivateCurrChild() {
 
         currImageNum = 0;
 
-        foreach (Transform child in transform) {
+        foreach (Transform child in objectParent) {
             if (child.GetSiblingIndex() == currChild) {
                 child.gameObject.SetActive(true);
             } else {
@@ -38,7 +40,7 @@ public class RandomController : Singleton<RandomController> {
 
     void CheckForPicture() {
 
-        if (currChild >= transform.childCount) {
+        if (currChild >= objectParent.childCount) {
             UnityEditor.EditorApplication.isPlaying = false;
             Debug.Log("Training complete!");
             return;
@@ -50,11 +52,6 @@ public class RandomController : Singleton<RandomController> {
     void TakePicture() {
         currImageNum++;
 
-        Transform currObject = transform.GetChild(currChild);
-
-        ChangeCamera.Instance.UpdateCamera(currObject);
-        currObject.GetComponent<ObjectBounds>().UpdateBounds();
-
         //create folder for images if it doesn't exist
         string filePath = Application.streamingAssetsPath + "/" + currObject.name;
         if (!File.Exists(filePath)) {
@@ -65,16 +62,21 @@ public class RandomController : Singleton<RandomController> {
         Debug.Log("taking picture num: " + currImageNum);
 
         //random image size
-        float width = Screen.width;
-        float height = Screen.height;
-        int randWith = Mathf.RoundToInt(Random.Range(width/2f, width));
-        int randHeight = Mathf.RoundToInt(Random.Range(height / 2f, height));
-        //take photo from active rend texture
-        Texture2D photo = new Texture2D(randWith, randHeight, TextureFormat.RGB24, false);
-        photo.ReadPixels(new Rect(0, 0, randWith, randHeight), 0, 0, false);
-        photo.Apply();
-        byte[] data = photo.EncodeToJPG(80);
-        DestroyImmediate(photo);
+        Rect bounds = ObjectBounds.Instance.GetBounds();
+
+        //take photo from portion of screen
+        //Texture2D photoBounds = new Texture2D((int)box.width, (int)box.height, TextureFormat.RGB24, false);
+        //photoBounds.ReadPixels(box, 0, 0, false);
+
+        ////take picture from full screen
+        int screenHeight = Screen.height;
+        int screenWidth = Screen.width;
+        Texture2D photoBounds = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
+        photoBounds.ReadPixels(new Rect(0, 0, screenWidth, screenHeight), 0, 0, false);
+
+        photoBounds.Apply();
+        byte[] data = photoBounds.EncodeToJPG(80);
+        DestroyImmediate(photoBounds);
         File.WriteAllBytes(filePath + "/" + currImageNum + ".jpg", data);
 
         if (currImageNum >= IMAGES_PER_OBJECT) {
@@ -84,13 +86,20 @@ public class RandomController : Singleton<RandomController> {
     }
 
     void ChangeAllItems() {
-        foreach (GameObject item in FindObjectsOfType<GameObject>()) {
-            IChangeable[] changeableItems = item.GetComponents<IChangeable>();
-            foreach (IChangeable changeable in changeableItems) {
-                if (changeable != null) {
-                    changeable.ChangeRandom();
+
+        if (currChild < objectParent.childCount) {
+
+            foreach (GameObject item in FindObjectsOfType<GameObject>()) {
+                IChangeable[] changeableItems = item.GetComponents<IChangeable>();
+                foreach (IChangeable changeable in changeableItems) {
+                    if (changeable != null) {
+                        changeable.ChangeRandom();
+                    }
                 }
             }
+            currObject = objectParent.GetChild(currChild);
+            ChangeCamera.Instance.UpdateCamera(currObject);
+            ObjectBounds.Instance.UpdateBounds(currObject, true);
         }
     }
 }
