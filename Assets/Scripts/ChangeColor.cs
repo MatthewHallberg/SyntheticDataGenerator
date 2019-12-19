@@ -17,7 +17,7 @@ public class ChangeColor : MonoBehaviour, IChangeable {
             //do albedo
             float randT = Random.Range(0f, 1f);
             Color randColor = Color.Lerp(min, max, randT);
-            mat.color = randColor;
+            mat.SetColor("_BaseColor", randColor);
         }
     }
 }

@@ -4,9 +4,9 @@
 public class ChangeLight : MonoBehaviour, IChangeable {
 
     [SerializeField]
-    float min;
+    float minIntensity;
     [SerializeField]
-    float max;
+    float maxIntensity;
 
     Light changeableLight;
 
@@ -15,7 +15,7 @@ public class ChangeLight : MonoBehaviour, IChangeable {
     }
 
     public void ChangeRandom() {
-        changeableLight.intensity = Random.Range(min, max);
-        changeableLight.color = Random.ColorHSV();
+        changeableLight.intensity = Random.Range(minIntensity, maxIntensity);
+        //changeableLight.color = Random.ColorHSV();
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TestRandom : MonoBehaviour {
 
@@ -29,6 +30,11 @@ public class TestRandom : MonoBehaviour {
         }
         Transform desiredObject = transform.GetChild(0);
         ChangeCamera.Instance.UpdateCamera(desiredObject);
+        StartCoroutine(DelayCalcBounds(desiredObject));
+    }
+
+    IEnumerator DelayCalcBounds(Transform desiredObject) {
+        yield return new WaitForEndOfFrame();
         ObjectBounds.Instance.UpdateBounds(desiredObject);
     }
 }

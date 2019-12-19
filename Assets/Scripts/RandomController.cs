@@ -18,9 +18,10 @@ public class RandomController : Singleton<RandomController> {
 
     void Update() {
         ChangeAllItems();
+        StartCoroutine(DelayPicture());
     }
 
-    IEnumerator OnPostRender() {
+    IEnumerator DelayPicture() {
         yield return new WaitForEndOfFrame();
         CheckForPicture();
     }
