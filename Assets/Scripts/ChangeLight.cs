@@ -16,6 +16,5 @@ public class ChangeLight : MonoBehaviour, IChangeable {
 
     public void ChangeRandom() {
         changeableLight.intensity = Random.Range(minIntensity, maxIntensity);
-        //changeableLight.color = Random.ColorHSV();
     }
 }

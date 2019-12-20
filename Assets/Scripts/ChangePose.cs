@@ -2,12 +2,15 @@
 
 public class ChangePose : MonoBehaviour, IChangeable {
 
-    const float MOVE_AMOUNT = 5f;
+    public Vector3 minAngle;
+    public Vector3 maxAngle;
+
+    Vector3 randAngle = Vector3.zero;
 
     public void ChangeRandom() {
-        //go through all child transforms recursively and slighty change pose
-        foreach (Transform trans in GetComponentsInChildren<Transform>()) {
-            trans.localEulerAngles -= Vector3.one * Random.Range(-MOVE_AMOUNT, MOVE_AMOUNT);
-        }
+        randAngle.x = Mathf.LerpAngle(minAngle.x, maxAngle.x, Random.Range(0f, 1f));
+        randAngle.y = Mathf.LerpAngle(minAngle.y, maxAngle.y, Random.Range(0f, 1f));
+        randAngle.z = Mathf.LerpAngle(minAngle.z, maxAngle.z, Random.Range(0f, 1f));
+        transform.localEulerAngles = randAngle;
     }
 }

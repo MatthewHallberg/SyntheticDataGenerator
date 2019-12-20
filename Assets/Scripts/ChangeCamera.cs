@@ -20,5 +20,10 @@ public class ChangeCamera : Singleton<ChangeCamera>, IChangeable {
     public void UpdateCamera(Transform currTransform) {
         Transform center = currTransform.Find("center");
         Camera.main.transform.LookAt(center);
+
+        //rotate random on y axis
+        //Vector3 randAngle = transform.localEulerAngles;
+        //randAngle.z = Random.Range(0, 360);
+        //transform.localEulerAngles = randAngle;
     }
 }

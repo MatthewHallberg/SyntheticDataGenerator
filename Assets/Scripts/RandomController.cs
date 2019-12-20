@@ -65,6 +65,12 @@ public class RandomController : Singleton<RandomController> {
         //random image size
         Rect bounds = ObjectBounds.Instance.GetBounds();
 
+        //make sure we dont go off screen
+        bounds.yMin = Mathf.Max(0, bounds.yMin);
+        bounds.xMin = Mathf.Max(0, bounds.xMin);
+        bounds.yMax = Mathf.Min(Screen.height, bounds.yMax);
+        bounds.xMax = Mathf.Min(Screen.width, bounds.xMax);
+
         //take photo from portion of screen
         Texture2D photoBounds = new Texture2D((int)bounds.width, (int)bounds.height, TextureFormat.RGB24, false);
         photoBounds.ReadPixels(bounds, 0, 0, false);
