@@ -1114,7 +1114,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--intermediate_store_frequency',
       type=int,
-      default=0,
+      default=1000,
       help="""\
          How many steps to store intermediate graph. If "0" then will not
          store.\
@@ -1147,13 +1147,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--testing_percentage',
       type=int,
-      default=10,
+      default=20,
       help='What percentage of images to use as a test set.'
   )
   parser.add_argument(
       '--validation_percentage',
       type=int,
-      default=10,
+      default=20,
       help='What percentage of images to use as a validation set.'
   )
   parser.add_argument(
