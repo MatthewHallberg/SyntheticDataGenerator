@@ -1,23 +1,15 @@
 import tensorflow as tf
 from object_detection.utils import dataset_util
+from object_detection.utils import label_map_util
 
 flags = tf.compat.v1.flags
 
-# Here is where the output filename of the TFRecord is determined. Change this,
-# perhaps to either `training.tfrecord` or `testing.tfrecord`.
 flags.DEFINE_string('output_path', 'custom.tfrecord', '')
 FLAGS = flags.FLAGS
 
-#TODO: hook to label file
-def class_text_to_int(label):
-	if label == 'Pikachu':
-		return 1
-	if label == 'Bulbasaur':
-		return 2
-	if label == 'Charmander':
-		return 3
-	else:
-		return 4
+#set label map dict
+#change line 138 of label_map_util to with tf.compat.v1.gfile.GFile(path, 'r') as fid:
+label_map_dict = label_map_util.get_label_map_dict("UnityStuff/labelmap.pbtxt")
 
 def create_tfrecord(filename, width, height, labelData):
 
@@ -36,15 +28,15 @@ def create_tfrecord(filename, width, height, labelData):
 
     chunk_size= 5
     for i in range(0, len(labelData), chunk_size):
-	    chunk = labelData[i:i+chunk_size]
-	    #remove last newline
-	    chunk[4] = chunk[4].rstrip("\n");
-	    classes_text.append(chunk[0])
-	    classes.append(class_text_to_int(chunk[0]))
-	    xmins.append(int(chunk[1]))
-	    xmaxs.append(int(chunk[2]))
-	    ymins.append(int(chunk[3]))
-	    ymaxs.append(int(chunk[4]))
+        chunk = labelData[i:i+chunk_size]
+        #remove last newline
+        chunk[4] = chunk[4].rstrip("\n");
+        classes_text.append(chunk[0])
+        classes.append(label_map_dict[chunk[0]])
+        xmins.append(int(chunk[1]))
+        xmaxs.append(int(chunk[2]))
+        ymins.append(int(chunk[3]))
+        ymaxs.append(int(chunk[4]))
 	    
     tfrecord = tf.train.Example(features=tf.train.Features(feature={
         'image/height': dataset_util.int64_feature(int(height)),
@@ -65,12 +57,12 @@ def create_tfrecord(filename, width, height, labelData):
 def main(_):
     writer = tf.compat.v1.python_io.TFRecordWriter(FLAGS.output_path)
 
-    with open("TrainData/labelData.txt") as fp:
+    with open("UnityStuff/labeldata.txt") as fp:
         line = fp.readline()
         while line:
             data = line.split(",")
             # image_id, image_width, image_height, label_name, x1, x2, y1, y2 
-            tfrecord = create_tfrecord("TrainData/Images/{}.jpg".format(data[0]), data[1], data[2], data[3:])
+            tfrecord = create_tfrecord("UnityStuff/Images/{}.jpg".format(data[0]), data[1], data[2], data[3:])
             writer.write(tfrecord.SerializeToString())
             line = fp.readline()
         writer.close()

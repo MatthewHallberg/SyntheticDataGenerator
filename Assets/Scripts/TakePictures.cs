@@ -5,30 +5,54 @@ using UnityEngine;
 
 public class TakePictures : MonoBehaviour {
 
-    static readonly int TOTAL_IMAGES = 600;
+    static readonly int TOTAL_IMAGES = 10;
 
     int imageNum = 1;
+    string parentPath;
     string imagePath;
     string labelPath;
 
     void Start() {
-        //create image folder
-        imagePath = Application.streamingAssetsPath + "/Images";
-        if (!File.Exists(imagePath)) {
-            Directory.CreateDirectory(imagePath);
-        }
-
-        //create label file
-        labelPath = Application.streamingAssetsPath + "/labelData.txt";
-
-        //clear label file
-        File.WriteAllText(labelPath, "");
+        CreateDirectories();
+        CreateLabelFile();
+        CreateLabelMap();
     }
 
     void Update() {
         if (PictureRoutine == null) {
             PictureRoutine = StartCoroutine(DelayPicture());
         }
+    }
+
+    void CreateDirectories() {
+        //create parent folder
+        parentPath = Application.streamingAssetsPath + "/UnityStuff";
+        if (!File.Exists(parentPath)) {
+            Directory.CreateDirectory(parentPath);
+        }
+        //create image folder
+        imagePath = parentPath + "/Images";
+        if (!File.Exists(imagePath)) {
+            Directory.CreateDirectory(imagePath);
+        }
+    }
+
+    void CreateLabelFile() {
+        //create label file
+        labelPath = parentPath + "/labeldata.txt";
+        File.WriteAllText(labelPath, "");
+    }
+
+    void CreateLabelMap() {
+        string labelMapPath = parentPath + "/labelmap.pbtxt";
+        string labelMap = "";
+        foreach (Transform child in transform) {
+            labelMap += "item {\n" +
+                "\tid: " + child.GetSiblingIndex() + 1 + "\n" +
+                "\tname: '" + child.gameObject.name + "'\n" +
+                "}\n";
+        }
+        File.WriteAllText(labelMapPath, labelMap);
     }
 
     Coroutine PictureRoutine;
