@@ -28,13 +28,15 @@ public class TestRandom : MonoBehaviour {
                 }
             }
         }
-        Transform desiredObject = transform.GetChild(0);
-        ChangeCamera.Instance.UpdateCamera(desiredObject);
-        StartCoroutine(DelayCalcBounds(desiredObject));
+        ObjectController.Instance.ActivateObjects();
+        StartCoroutine(DelayBounds());
     }
 
-    IEnumerator DelayCalcBounds(Transform desiredObject) {
+    IEnumerator DelayBounds() {
         yield return new WaitForEndOfFrame();
-        ObjectBounds.Instance.UpdateBounds(desiredObject);
+        foreach (ObjectBounds bounds in FindObjectsOfType<ObjectBounds>()) {
+            bounds.UpdateBounds();
+        }
+        ObjectController.Instance.GetObjects();
     }
 }

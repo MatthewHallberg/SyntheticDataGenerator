@@ -41,55 +41,58 @@ public class RandomController : Singleton<RandomController> {
 
     void CheckForPicture() {
 
-        if (currChild >= objectParent.childCount) {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.Log("Training complete!");
-            return;
-        }
+        //if (currChild >= objectParent.childCount) {
+        //    UnityEditor.EditorApplication.isPlaying = false;
+        //    Debug.Log("Training complete!");
+        //    return;
+        //}
 
-        TakePicture();
+        //currImageNum++;
+
+        ////create folder for images if it doesn't exist
+        //string filePath = Application.streamingAssetsPath + "/" + currObject.name;
+        //if (!File.Exists(filePath)) {
+        //    Directory.CreateDirectory(filePath);
+        //}
+
+        ////take picture
+        //Debug.Log("taking picture num: " + currImageNum);
+
+        ////random image size
+        //Rect bounds = ObjectBounds.Instance.GetBounds();
+
+        ////make sure we dont go off screen
+        //bounds.yMin = Mathf.Max(0, bounds.yMin);
+        //bounds.xMin = Mathf.Max(0, bounds.xMin);
+        //bounds.yMax = Mathf.Min(Screen.height, bounds.yMax);
+        //bounds.xMax = Mathf.Min(Screen.width, bounds.xMax);
+
+        ////Texture2D photo = TakeCroppedPicture(bounds);
+        //Texture2D photo = TakeFullScreenPicture(bounds);
+
+        //photo.Apply();
+        //byte[] data = photo.EncodeToJPG(80);
+        //DestroyImmediate(photo);
+        //File.WriteAllBytes(filePath + "/" + currImageNum + ".jpg", data);
+
+        //if (currImageNum >= IMAGES_PER_OBJECT) {
+        //    currChild++;
+        //    ActivateCurrChild();
+        //}
     }
 
-    void TakePicture() {
-        currImageNum++;
+    Texture2D TakeCroppedPicture(Rect bounds) {
+        Texture2D photo = new Texture2D((int)bounds.width, (int)bounds.height, TextureFormat.RGB24, false);
+        photo.ReadPixels(bounds, 0, 0, false);
+        return photo;
+    }
 
-        //create folder for images if it doesn't exist
-        string filePath = Application.streamingAssetsPath + "/" + currObject.name;
-        if (!File.Exists(filePath)) {
-            Directory.CreateDirectory(filePath);
-        }
-
-        //take picture
-        Debug.Log("taking picture num: " + currImageNum);
-
-        //random image size
-        Rect bounds = ObjectBounds.Instance.GetBounds();
-
-        //make sure we dont go off screen
-        bounds.yMin = Mathf.Max(0, bounds.yMin);
-        bounds.xMin = Mathf.Max(0, bounds.xMin);
-        bounds.yMax = Mathf.Min(Screen.height, bounds.yMax);
-        bounds.xMax = Mathf.Min(Screen.width, bounds.xMax);
-
-        //take photo from portion of screen
-        Texture2D photoBounds = new Texture2D((int)bounds.width, (int)bounds.height, TextureFormat.RGB24, false);
-        photoBounds.ReadPixels(bounds, 0, 0, false);
-
-        ////take picture from full screen
-        //int screenHeight = Screen.height;
-        //int screenWidth = Screen.width;
-        //Texture2D photoBounds = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
-        //photoBounds.ReadPixels(new Rect(0, 0, screenWidth, screenHeight), 0, 0, false);
-
-        photoBounds.Apply();
-        byte[] data = photoBounds.EncodeToJPG(80);
-        DestroyImmediate(photoBounds);
-        File.WriteAllBytes(filePath + "/" + currImageNum + ".jpg", data);
-
-        if (currImageNum >= IMAGES_PER_OBJECT) {
-            currChild++;
-            ActivateCurrChild();
-        }
+    Texture2D TakeFullScreenPicture(Rect bounds) {
+        int screenHeight = Screen.height;
+        int screenWidth = Screen.width;
+        Texture2D photo = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
+        photo.ReadPixels(new Rect(0, 0, screenWidth, screenHeight), 0, 0, false);
+        return photo;
     }
 
     void ChangeAllItems() {
@@ -103,10 +106,11 @@ public class RandomController : Singleton<RandomController> {
                         changeable.ChangeRandom();
                     }
                 }
+                ObjectBounds bounds = item.GetComponent<ObjectBounds>();
+                if (bounds != null) {
+                    bounds.UpdateBounds();
+                }
             }
-            currObject = objectParent.GetChild(currChild);
-            ChangeCamera.Instance.UpdateCamera(currObject);
-            ObjectBounds.Instance.UpdateBounds(currObject, false);
         }
     }
 }

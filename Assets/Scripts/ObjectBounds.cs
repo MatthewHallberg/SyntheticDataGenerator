@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ObjectBounds : Singleton<ObjectBounds> {
+public class ObjectBounds : MonoBehaviour {
 
     public GUISkin guiSkin;
 
@@ -33,15 +33,19 @@ public class ObjectBounds : Singleton<ObjectBounds> {
         return photoRect;
     }
 
-    public void UpdateBounds(Transform trans, bool visualize = true) {
+    public void UpdateBounds(bool visualize = true) {
+
+        if (!gameObject.activeSelf) {
+            return;
+        }
 
         showBox = visualize;
         
-        Vector3[] verts = MeshUtility.GetMesh(trans).vertices;
+        Vector3[] verts = MeshUtility.GetMesh(transform).vertices;
 
         //convert to world point, then screen space
         for (int i = 0; i < verts.Length; i++) {
-            verts[i] = cam.WorldToScreenPoint(trans.TransformPoint(verts[i]));
+            verts[i] = cam.WorldToScreenPoint(transform.TransformPoint(verts[i]));
         }
 
         //create new box
