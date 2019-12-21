@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ObjectController : Singleton<ObjectController> {
 
-    public float minDistance;
-
     public void ActivateObjects() {
         //make sure at least one child gets activated
         int desiredChild = Random.Range(0, transform.childCount);
@@ -24,6 +22,7 @@ public class ObjectController : Singleton<ObjectController> {
     }
 
     Dictionary<GameObject, Rect> GetActiveObjects() {
+
         //add all active objects to a dict
         Dictionary<GameObject, Rect> currObjects = new Dictionary<GameObject, Rect>();
 

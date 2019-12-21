@@ -64,6 +64,12 @@ public class ObjectBounds : MonoBehaviour {
             currBox.yMax = currBox.yMax > verts[i].y ? currBox.yMax : verts[i].y;
         }
 
+        ////make sure we dont go off screen
+        currBox.yMin = Mathf.Max(0, currBox.yMin);
+        currBox.xMin = Mathf.Max(0, currBox.xMin);
+        currBox.yMax = Mathf.Min(Screen.height, currBox.yMax);
+        currBox.xMax = Mathf.Min(Screen.width, currBox.xMax);
+
         photoRect = currBox;
 
         currBox.yMin = Screen.height - currBox.yMin;
