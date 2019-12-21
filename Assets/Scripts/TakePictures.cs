@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TakePictures : MonoBehaviour {
 
-    static readonly int TOTAL_IMAGES = 100;
+    static readonly int TOTAL_IMAGES = 600;
 
     int imageNum = 1;
     string imagePath;

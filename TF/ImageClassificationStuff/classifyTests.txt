@@ -1,5 +1,4 @@
 
-
 python3 retrain.py --image_dir photos --how_many_training_steps 1000
 
 python3 classify.py --image test/1.jpg

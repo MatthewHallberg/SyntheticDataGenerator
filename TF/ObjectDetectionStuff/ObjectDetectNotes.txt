@@ -1,0 +1,11 @@
+# From tensorflow/models/research/
+protoc object_detection/protos/*.proto --python_out=.
+
+
+# From tensorflow/models/research/
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+
+# test install
+python object_detection/builders/model_builder_test.py
+
+
