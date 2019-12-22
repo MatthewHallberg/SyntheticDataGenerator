@@ -2,22 +2,18 @@ import tensorflow as tf
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
 
-flags = tf.compat.v1.flags
-
-flags.DEFINE_string('output_path', 'custom.tfrecord', '')
-FLAGS = flags.FLAGS
-
 #set label map dict
-#change line 138 of label_map_util to with tf.compat.v1.gfile.GFile(path, 'r') as fid:
 label_map_dict = label_map_util.get_label_map_dict("UnityStuff/labelmap.pbtxt")
 
 def create_tfrecord(filename, width, height, labelData):
 
-    filename = str.encode(filename)
+    filename = filename.encode('utf8')
 
     with open(filename, 'rb') as myfile:
-		encoded_image_data = myfile.read()
+        encoded_image_data = myfile.read()
 	
+    height = int(height)
+    width = int(width)
     image_format = b'jpeg'
     classes_text = [] # List of string class name of bounding box (1 per box)
     classes = [] # List of integer class id of bounding box (1 per box)
@@ -31,16 +27,16 @@ def create_tfrecord(filename, width, height, labelData):
         chunk = labelData[i:i+chunk_size]
         #remove last newline
         chunk[4] = chunk[4].rstrip("\n");
-        classes_text.append(chunk[0])
+        classes_text.append(chunk[0].encode('utf8'))
         classes.append(label_map_dict[chunk[0]])
-        xmins.append(int(chunk[1]))
-        xmaxs.append(int(chunk[2]))
-        ymins.append(int(chunk[3]))
-        ymaxs.append(int(chunk[4]))
+        xmins.append(float(chunk[1]) / width)
+        xmaxs.append(float(chunk[2]) / width)
+        ymins.append(float(chunk[3]) / height)
+        ymaxs.append(float(chunk[4]) / height)
 	    
     tfrecord = tf.train.Example(features=tf.train.Features(feature={
-        'image/height': dataset_util.int64_feature(int(height)),
-        'image/width': dataset_util.int64_feature(int(width)),
+        'image/height': dataset_util.int64_feature(height),
+        'image/width': dataset_util.int64_feature(width),
         'image/filename': dataset_util.bytes_feature(filename),
         'image/source_id': dataset_util.bytes_feature(filename),
         'image/encoded': dataset_util.bytes_feature(encoded_image_data),
@@ -54,21 +50,23 @@ def create_tfrecord(filename, width, height, labelData):
     }))
     return tfrecord
 
-def main(_):
-    writer = tf.compat.v1.python_io.TFRecordWriter(FLAGS.output_path)
+def read_file(type):
+    writer = tf.python_io.TFRecordWriter("UnityStuff/" + type + ".record")
 
-    with open("UnityStuff/labeldata.txt") as fp:
+    with open("UnityStuff/" + type + ".txt") as fp:
         line = fp.readline()
         while line:
             data = line.split(",")
             # image_id, image_width, image_height, label_name, x1, x2, y1, y2 
-            tfrecord = create_tfrecord("UnityStuff/Images/{}.jpg".format(data[0]), data[1], data[2], data[3:])
+            tfrecord = create_tfrecord("UnityStuff/" + type + "/{}.jpg".format(data[0]), data[1], data[2], data[3:])
             writer.write(tfrecord.SerializeToString())
             line = fp.readline()
         writer.close()
+        print(type + " record complete.")
 
-	print("Done.")
-
+def main(_):
+    read_file("train")
+    read_file("test")
 
 if __name__ == '__main__':
-     tf.compat.v1.app.run()
+    tf.app.run()

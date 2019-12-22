@@ -5,17 +5,23 @@ using UnityEngine;
 
 public class TakePictures : MonoBehaviour {
 
-    static readonly int TOTAL_IMAGES = 10;
+    const bool SHOW_BOXES = false;
+    const int TOTAL_IMAGES = 600;
 
+    int testNum;
     int imageNum = 1;
     string parentPath;
-    string imagePath;
-    string labelPath;
+
+    string testImagePath;
+    string trainImagePath;
+    string testLabelPath;
+    string trainLabelPath;
 
     void Start() {
         CreateDirectories();
-        CreateLabelFile();
+        CreateLabelFiles();
         CreateLabelMap();
+        testNum = Mathf.RoundToInt(TOTAL_IMAGES * .20f);
     }
 
     void Update() {
@@ -30,17 +36,24 @@ public class TakePictures : MonoBehaviour {
         if (!File.Exists(parentPath)) {
             Directory.CreateDirectory(parentPath);
         }
-        //create image folder
-        imagePath = parentPath + "/Images";
-        if (!File.Exists(imagePath)) {
-            Directory.CreateDirectory(imagePath);
+        //create test and train folders
+        testImagePath = parentPath + "/test";
+        if (!File.Exists(testImagePath)) {
+            Directory.CreateDirectory(testImagePath);
+        }
+
+        trainImagePath = parentPath + "/train";
+        if (!File.Exists(trainImagePath)) {
+            Directory.CreateDirectory(trainImagePath);
         }
     }
 
-    void CreateLabelFile() {
-        //create label file
-        labelPath = parentPath + "/labeldata.txt";
-        File.WriteAllText(labelPath, "");
+    void CreateLabelFiles() {
+        //create label files
+        testLabelPath = parentPath + "/test.txt";
+        File.WriteAllText(testLabelPath, "");
+        trainLabelPath = parentPath + "/train.txt";
+        File.WriteAllText(trainLabelPath, "");
     }
 
     void CreateLabelMap() {
@@ -61,7 +74,7 @@ public class TakePictures : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         //update bounds of all objects
         foreach (ObjectBounds bounds in FindObjectsOfType<ObjectBounds>()) {
-            bounds.UpdateBounds();
+            bounds.UpdateBounds(SHOW_BOXES);
         }
 
         WriteObjectsToFile(ObjectController.Instance.GetObjects());
@@ -89,7 +102,15 @@ public class TakePictures : MonoBehaviour {
             line += "," + obj.Key.name + "," + tfRect.xMin + ","
                 + tfRect.xMax + "," + tfRect.yMin + "," + tfRect.yMax;
          }
-        StreamWriter writer = new StreamWriter(labelPath, true);
+
+        StreamWriter writer;
+
+        if (imageNum > testNum) {
+            writer = new StreamWriter(trainLabelPath, true);
+        } else {
+            writer = new StreamWriter(testLabelPath, true);
+        }
+
         writer.WriteLine(line);
         writer.Close();
     }
@@ -115,7 +136,11 @@ public class TakePictures : MonoBehaviour {
         photo.Apply();
         byte[] data = photo.EncodeToJPG(75);
         DestroyImmediate(photo);
-        File.WriteAllBytes(imagePath + "/" + imageNum + ".jpg", data);
+        if (imageNum > testNum) {
+            File.WriteAllBytes(trainImagePath + "/" + imageNum + ".jpg", data);
+        } else {
+            File.WriteAllBytes(testImagePath + "/" + imageNum + ".jpg", data);
+        }
     }
 
     void ChangeAllItems() {

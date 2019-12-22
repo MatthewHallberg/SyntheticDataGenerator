@@ -1,3 +1,14 @@
+
+
+pip install tensorflow==1.14.0 (plus all other dependencies from models repo)
+
+download models repo from here: https://github.com/tensorflow/models
+
+download faster_rcnn_inception_v2_coco from here: (put in object_detection folder)
+https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md 
+
+Put UnityStuff folder into models/research
+
 # From tensorflow/models/research/
 protoc object_detection/protos/*.proto --python_out=.
 
@@ -5,7 +16,8 @@ protoc object_detection/protos/*.proto --python_out=.
 # From tensorflow/models/research/
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
-# test install
-python object_detection/builders/model_builder_test.py
+#create tf record
+python createTFrecord.py
 
-
+#legacy train
+python object_detection/legacy/train.py --pipeline_config_path=faster_rcnn_inception_v2_custom.config --train_dir=trainOutput/ --logtostderr

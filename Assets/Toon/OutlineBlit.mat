@@ -76,7 +76,7 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 0.0078
     - _Poseterize: 1
-    - _PosterizationCount: 6
+    - _PosterizationCount: 9
     - _QueueOffset: 0
     - _Raw: 0
     - _ReceiveShadows: 1
