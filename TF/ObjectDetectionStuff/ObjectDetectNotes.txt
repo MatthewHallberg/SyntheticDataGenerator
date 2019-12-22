@@ -1,5 +1,4 @@
 
-
 pip install tensorflow==1.14.0 (plus all other dependencies from models repo)
 
 download models repo from here: https://github.com/tensorflow/models
@@ -21,3 +20,9 @@ python createTFrecord.py
 
 #legacy train
 python object_detection/legacy/train.py --pipeline_config_path=faster_rcnn_inception_v2_custom.config --train_dir=trainOutput/ --logtostderr
+
+#open tensorboard
+python3 /Users/matthewhallberg/Library/Python/3.7/lib/python/site-packages/tensorboard/main.py --logdir=/Users/matthewhallberg/Desktop/models/research/trainOutput 
+
+#export inference graph
+python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path faster_rcnn_inception_v2_custom.config --trained_checkpoint_prefix trainOutput/model.ckpt-1275 --output_directory finalOutput
