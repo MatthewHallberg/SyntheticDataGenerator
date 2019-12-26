@@ -6,7 +6,7 @@ using UnityEngine;
 public class TakePictures : MonoBehaviour {
 
     const bool SHOW_BOXES = false;
-    const int TOTAL_IMAGES = 600;
+    const int TOTAL_IMAGES = 10;
 
     int testNum;
     int imageNum = 1;
@@ -18,6 +18,7 @@ public class TakePictures : MonoBehaviour {
     string trainLabelPath;
 
     void Start() {
+        CopyUtils();
         CreateDirectories();
         CreateLabelFiles();
         CreateLabelMap();
@@ -27,6 +28,28 @@ public class TakePictures : MonoBehaviour {
     void Update() {
         if (PictureRoutine == null) {
             PictureRoutine = StartCoroutine(DelayPicture());
+        }
+    }
+
+    void CopyUtils() {
+        DirectoryInfo srcPath = new DirectoryInfo("./TFUtils");
+        DirectoryInfo destPath =new DirectoryInfo(Application.streamingAssetsPath + "/UnityStuff/TFUtils");
+        CopyAll(srcPath, destPath);
+
+    }
+
+    void CopyAll(DirectoryInfo source, DirectoryInfo target) {
+        Directory.CreateDirectory(target.FullName);
+
+        // Copy each file into the new directory.
+        foreach (FileInfo fi in source.GetFiles()) {
+            fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+        }
+
+        // Copy each subdirectory using recursion.
+        foreach (DirectoryInfo diSourceSubDir in source.GetDirectories()) {
+            DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
+            CopyAll(diSourceSubDir, nextTargetSubDir);
         }
     }
 
@@ -61,7 +84,7 @@ public class TakePictures : MonoBehaviour {
         string labelMap = "";
         foreach (Transform child in transform) {
             labelMap += "item {\n" +
-                "\tid: " + child.GetSiblingIndex() + 1 + "\n" +
+                "\tid: " + (child.GetSiblingIndex() + 1) + "\n" +
                 "\tname: '" + child.gameObject.name + "'\n" +
                 "}\n";
         }
