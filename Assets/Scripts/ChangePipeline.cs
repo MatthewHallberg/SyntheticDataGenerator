@@ -6,6 +6,6 @@ public class ChangePipeline : MonoBehaviour, IChangeable {
     public LightweightRenderPipelineAsset asset;
 
     public void ChangeRandom() {
-        asset.renderScale = Random.Range(.4f, 2f);
+        asset.renderScale = Random.Range(.2f, 4f);
     }
 }

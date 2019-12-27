@@ -6,7 +6,7 @@ using UnityEngine;
 public class TakePictures : MonoBehaviour {
 
     const bool SHOW_BOXES = false;
-    const int TOTAL_IMAGES = 10;
+    const int TOTAL_IMAGES = 1000;
 
     int testNum;
     int imageNum = 1;

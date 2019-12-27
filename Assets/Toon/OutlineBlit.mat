@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: OutlineBlit
   m_Shader: {fileID: 4800000, guid: 2ea6406db34934e8eb475fd32735c4b9, type: 3}
-  m_ShaderKeywords: POSTERIZE
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -66,7 +66,7 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Delta: 0.0025
+    - _Delta: 0.0005
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
@@ -75,8 +75,8 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Outline: 0.0078
-    - _Poseterize: 1
-    - _PosterizationCount: 9
+    - _Poseterize: 0
+    - _PosterizationCount: 3.07
     - _QueueOffset: 0
     - _Raw: 0
     - _ReceiveShadows: 1
