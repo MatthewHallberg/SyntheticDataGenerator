@@ -3,6 +3,7 @@
 public class RandoTextures : Singleton<RandoTextures> {
 
     Object[] textures;
+    int texNum;
 
     protected override void Awake() {
         base.Awake();
@@ -10,6 +11,11 @@ public class RandoTextures : Singleton<RandoTextures> {
     }
 
     public Texture GetRandomTexture() {
-        return textures[Random.Range(0, textures.Length)] as Texture;
+        if (texNum < textures.Length - 1) {
+            texNum++;
+        } else {
+            texNum = 0;
+        }
+        return textures[texNum] as Texture;
     }
 }

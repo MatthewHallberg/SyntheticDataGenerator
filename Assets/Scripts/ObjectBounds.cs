@@ -46,6 +46,10 @@ public class ObjectBounds : MonoBehaviour {
         //convert to world point, then screen space
         for (int i = 0; i < verts.Length; i++) {
             verts[i] = cam.WorldToScreenPoint(transform.TransformPoint(verts[i]));
+            //make sure we dont go off screen
+            if (verts[i].x < 0 || verts[i].x > Screen.width || verts[i].y < 0 || verts[i].y > Screen.height) {
+                verts[i] = verts[0];
+            }
         }
 
         //create new box
@@ -63,12 +67,6 @@ public class ObjectBounds : MonoBehaviour {
             currBox.yMin = currBox.yMin < verts[i].y ? currBox.yMin : verts[i].y;
             currBox.yMax = currBox.yMax > verts[i].y ? currBox.yMax : verts[i].y;
         }
-
-        ////make sure we dont go off screen
-        currBox.yMin = Mathf.Max(0, currBox.yMin);
-        currBox.xMin = Mathf.Max(0, currBox.xMin);
-        currBox.yMax = Mathf.Min(Screen.height, currBox.yMax);
-        currBox.xMax = Mathf.Min(Screen.width, currBox.xMax);
 
         photoRect = currBox;
 

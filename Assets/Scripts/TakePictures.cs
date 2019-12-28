@@ -6,7 +6,7 @@ using UnityEngine;
 public class TakePictures : MonoBehaviour {
 
     const bool SHOW_BOXES = false;
-    const int TOTAL_IMAGES = 1000;
+    const int TOTAL_IMAGES = 5000;
 
     int testNum;
     int imageNum = 1;
@@ -122,8 +122,11 @@ public class TakePictures : MonoBehaviour {
 
             Rect tfRect = ConvertUnityRectToTensorflow(obj.Value);
 
-            line += "," + obj.Key.name + "," + tfRect.xMin + ","
-                + tfRect.xMax + "," + tfRect.yMin + "," + tfRect.yMax;
+            //make sure bounds are within image
+            if (tfRect.xMin != tfRect.xMax && tfRect.yMin != tfRect.xMax) {
+                line += "," + obj.Key.name + "," + tfRect.xMin + ","
+                    + tfRect.xMax + "," + tfRect.yMin + "," + tfRect.yMax;
+            }
          }
 
         StreamWriter writer;
