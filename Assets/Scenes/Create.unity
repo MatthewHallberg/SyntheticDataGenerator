@@ -718,7 +718,6 @@ GameObject:
   - component: {fileID: 896438338}
   - component: {fileID: 896438337}
   - component: {fileID: 896438336}
-  - component: {fileID: 896438340}
   m_Layer: 0
   m_Name: Bulbasaur
   m_TagString: Untagged
@@ -733,13 +732,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896438334}
-  m_LocalRotation: {x: -0.40619642, y: -0.50008494, z: -0.12418316, w: 0.754651}
-  m_LocalPosition: {x: 0, y: 3.7, z: 1.02}
+  m_LocalRotation: {x: -0.38403496, y: -0.45777106, z: -0.031367566, w: 0.80123574}
+  m_LocalPosition: {x: 0, y: -0.96, z: 0.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 321537601}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -47.5, y: -75.44, z: 18.9}
+  m_LocalEulerAnglesHint: {x: -40.1, y: -68.05, z: 23.2}
 --- !u!114 &896438336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,10 +751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3777266d91ea64b3490793d1dbd54ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPosition: {x: -1.5, y: 1, z: 0}
-  maxPosition: {x: 1.5, y: 4, z: 3}
-  minAngle: {x: -100, y: 30, z: -50}
-  maxAngle: {x: 50, y: -130, z: 50}
 --- !u!114 &896438337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,19 +810,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896438334}
   m_Mesh: {fileID: -2432090755550338912, guid: 0214a777ad632494aa3e5399fd8e8114, type: 3}
---- !u!114 &896438340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896438334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2c899c80825496ead06648a853b82d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: {r: 0.2735849, g: 0.26971343, b: 0.26971343, a: 1}
 --- !u!1 &1403713016
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,7 +823,6 @@ GameObject:
   - component: {fileID: 1403713019}
   - component: {fileID: 1403713018}
   - component: {fileID: 1403713021}
-  - component: {fileID: 1403713022}
   m_Layer: 0
   m_Name: Charmander
   m_TagString: Untagged
@@ -856,13 +837,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403713016}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.49999994, z: 1}
+  m_LocalRotation: {x: -0.7114399, y: 0.026956523, z: 0.02733078, w: 0.70169765}
+  m_LocalPosition: {x: 0.01, y: 0.2, z: 2.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 321537601}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.79, y: 4.4, z: 0}
 --- !u!114 &1403713018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,10 +856,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3777266d91ea64b3490793d1dbd54ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPosition: {x: -1.5, y: 1, z: 0}
-  maxPosition: {x: 1.5, y: 4, z: 3}
-  minAngle: {x: -160, y: -90, z: 0}
-  maxAngle: {x: -25, y: 90, z: 0}
 --- !u!23 &1403713019
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -939,19 +916,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guiSkin: {fileID: 11400000, guid: 4ddb9d8d3869249fb809d35112cefcb6, type: 2}
---- !u!114 &1403713022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403713016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2c899c80825496ead06648a853b82d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: {r: 0.2735849, g: 0.26971343, b: 0.26971343, a: 1}
 --- !u!1 &2043689589
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,7 +929,6 @@ GameObject:
   - component: {fileID: 2043689593}
   - component: {fileID: 2043689592}
   - component: {fileID: 2043689591}
-  - component: {fileID: 2043689595}
   m_Layer: 0
   m_Name: Pikachu
   m_TagString: Untagged
@@ -980,13 +943,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043689589}
-  m_LocalRotation: {x: -0.19952762, y: -0.37832993, z: -0.08387368, w: 0.9000114}
-  m_LocalPosition: {x: 0, y: 1.8, z: 2.6}
+  m_LocalRotation: {x: -0.5594916, y: -0.1684751, z: 0.1280859, w: 0.80136096}
+  m_LocalPosition: {x: 0.4, y: -0.58, z: 1.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 321537601}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -25, y: -45.6, z: 0}
+  m_LocalEulerAnglesHint: {x: -58.6, y: -52.5, z: 49.1}
 --- !u!114 &2043689591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,10 +962,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3777266d91ea64b3490793d1dbd54ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPosition: {x: -1.5, y: 1, z: 0}
-  maxPosition: {x: 1.5, y: 4, z: 3}
-  minAngle: {x: -125, y: -90, z: 0}
-  maxAngle: {x: -25, y: 90, z: 0}
 --- !u!114 &2043689592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,19 +1021,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043689589}
   m_Mesh: {fileID: -2432090755550338912, guid: 3e6b4e48901aca244aa3e7683142cc70, type: 3}
---- !u!114 &2043689595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043689589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2c899c80825496ead06648a853b82d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: {r: 0.2735849, g: 0.26971343, b: 0.26971343, a: 1}
 --- !u!1 &2120437858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1034,6 @@ GameObject:
   - component: {fileID: 2120437862}
   - component: {fileID: 2120437861}
   - component: {fileID: 2120437860}
-  - component: {fileID: 2120437864}
   m_Layer: 0
   m_Name: Squirtle
   m_TagString: Untagged
@@ -1104,7 +1049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120437858}
   m_LocalRotation: {x: -0.70695174, y: 0.014808513, z: 0.014808513, w: 0.70695174}
-  m_LocalPosition: {x: 0.28000012, y: 0.36999953, z: 2.2800004}
+  m_LocalPosition: {x: 0.28000012, y: 1.19, z: 2.2800004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 321537601}
@@ -1122,10 +1067,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3777266d91ea64b3490793d1dbd54ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPosition: {x: -1.5, y: 1, z: 0}
-  maxPosition: {x: 1.5, y: 4, z: 3}
-  minAngle: {x: -160, y: -90, z: 0}
-  maxAngle: {x: -25, y: 90, z: 0}
 --- !u!114 &2120437861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,16 +1126,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120437858}
   m_Mesh: {fileID: -2432090755550338912, guid: dbfed49c6d6fcc248961298bc51c6212, type: 3}
---- !u!114 &2120437864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120437858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2c899c80825496ead06648a853b82d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: {r: 0.2735849, g: 0.26971343, b: 0.26971343, a: 1}

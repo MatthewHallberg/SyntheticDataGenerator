@@ -2,29 +2,27 @@
 
 public class ChangeTransform : MonoBehaviour, IChangeable {
 
-    [SerializeField]
-    Vector3 minPosition;
-    [SerializeField]
-    Vector3 maxPosition;
-    [SerializeField]
-    Vector3 minAngle;
-    [SerializeField]
-    Vector3 maxAngle;
+    const int MAX_ANGLE = 15;
+
+    Vector3 startPosition;
+    Vector3 startAngle;
+
+    void Start() {
+        startPosition = transform.localPosition;
+        startAngle = transform.localEulerAngles;
+    }
 
     public void ChangeRandom() {
 
-        //handle position
-        Vector3 randPos;
-        randPos.x = Random.Range(minPosition.x, maxPosition.x);
-        randPos.y = Random.Range(minPosition.y, maxPosition.y);
-        randPos.z = Random.Range(minPosition.z, maxPosition.z);
-        transform.localPosition = randPos;
+        //choose random position on screen
+        Vector3 randScreenPos = new Vector3(Random.Range(.15f, .85f), Random.Range(.4f, 1.2f), startPosition.z + Random.Range(0, 6));
+        transform.position = Camera.main.ViewportToWorldPoint(randScreenPos);
 
         //handle random rotation
         Vector3 randAngle;
-        randAngle.x = Random.Range(minAngle.x, maxAngle.x);
-        randAngle.y = Random.Range(minAngle.y, maxAngle.y);
-        randAngle.z = Random.Range(minAngle.z, maxAngle.z);
+        randAngle.x = startAngle.x + Random.Range(-MAX_ANGLE, MAX_ANGLE);
+        randAngle.y = startAngle.y + Random.Range(-MAX_ANGLE, MAX_ANGLE);
+        randAngle.z = startAngle.z + Random.Range(-MAX_ANGLE, MAX_ANGLE);
         transform.localEulerAngles = randAngle;
     }
 }
