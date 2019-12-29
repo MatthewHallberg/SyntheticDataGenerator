@@ -3,9 +3,6 @@
 [RequireComponent(typeof(Renderer))]
 public class ChangeColor : MonoBehaviour, IChangeable {
 
-    public Color max;
-
-    Color min = Color.white;
     Renderer rend;
 
     void Start() {
@@ -14,9 +11,7 @@ public class ChangeColor : MonoBehaviour, IChangeable {
 
     public void ChangeRandom() {
         foreach (Material mat in rend.materials) {
-            //do albedo
-            float randT = Random.Range(0f, 1f);
-            Color randColor = Color.Lerp(min, max, randT);
+            Color randColor = Random.ColorHSV();
             mat.SetColor("_BaseColor", randColor);
         }
     }

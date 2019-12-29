@@ -82,11 +82,15 @@ public class TakePictures : MonoBehaviour {
     void CreateLabelMap() {
         string labelMapPath = parentPath + "/labelmap.pbtxt";
         string labelMap = "";
+        List<string> uniqueNames = new List<string>();
         foreach (Transform child in transform) {
-            labelMap += "item {\n" +
+            if (!uniqueNames.Contains(child.gameObject.name)) {
+                uniqueNames.Add(child.gameObject.name);
+                labelMap += "item {\n" +
                 "\tid: " + (child.GetSiblingIndex() + 1) + "\n" +
                 "\tname: '" + child.gameObject.name + "'\n" +
                 "}\n";
+            }
         }
         File.WriteAllText(labelMapPath, labelMap);
     }

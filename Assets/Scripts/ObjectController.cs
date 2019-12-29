@@ -5,14 +5,8 @@ using UnityEngine;
 public class ObjectController : Singleton<ObjectController> {
 
     public void ActivateObjects() {
-        //make sure at least one child gets activated
-        int desiredChild = Random.Range(0, transform.childCount);
         foreach (Transform child in transform) {
-            if (child.GetSiblingIndex() == desiredChild) {
-                child.gameObject.SetActive(true);
-            } else {
-                child.gameObject.SetActive(1 == Random.Range(0, 2));
-            }
+            child.gameObject.SetActive(true);
         }
     }
 

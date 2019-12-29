@@ -15,7 +15,7 @@ public class ChangeTransform : MonoBehaviour, IChangeable {
     public void ChangeRandom() {
 
         //choose random position on screen
-        Vector3 randScreenPos = new Vector3(Random.Range(.15f, .85f), Random.Range(.4f, 1.2f), startPosition.z + Random.Range(0, 6));
+        Vector3 randScreenPos = new Vector3(Random.Range(.15f, .85f), Random.Range(.4f, 1.2f), startPosition.z + Random.Range(0, 4));
         transform.position = Camera.main.ViewportToWorldPoint(randScreenPos);
 
         //handle random rotation
