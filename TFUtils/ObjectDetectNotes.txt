@@ -31,13 +31,24 @@ WINDOWS----
 need python 3.5 64 bit
 install pip
 
-py -m pip install tensorflow-gpu==1.14.0 
+models repo for TF 1.8 
+ https://github.com/tensorflow/models/tree/d530ac540b0103caa194b4824af353f1b073553b
+
+py -m pip install tensorflow-gpu==1.8.0 
+
+from model/research run:
 
 py setup.py build
 py setup.py install
 
 go to model/research/slim and run the following:
 py -m pip install -e .
+
+download protoc google and run .exe in bin folder (probably just follow official install instructions)
+
+from models/research run (ALSO NEED TO RUN WHEN OPENING NEW WINDOW??)
+protoc object_detection/protos/*.proto --python_out=.
+SET PYTHONPATH=%cd%;%cd%\slim
 
 py -m pip install matplotlib
 py -m pip install Cython
@@ -46,13 +57,18 @@ py -m pip install pillow
 py -m pip install lxml
 py -m pip install jupyter
 
+install pycocotools from github link, add C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build to environmeent variables
+
 py -m pip install opencv-python
 
 py createTFrecord.py
 
-py ../../object_detection/legacy/train.py --pipeline_config_path=ssdlite_mobilenet_v2_coco.config --train_dir=../trainOutput/ --logtostderr
+py ../../object_detection/train.py --pipeline_config_path=ssdlite_mobilenet_v2_coco.config --train_dir=../trainOutput/ --logtostderr
 
 py ../../object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path ssdlite_mobilenet_v2_coco.config --trained_checkpoint_prefix ../trainOutput/model.ckpt-2512 --output_directory ../finalOutput
 
+TENSORBOARD:
 
+//remove multiple event files from folder or else this will error out
+py C:\Users\matth\AppData\Local\Programs\Python\Python35\Lib\site-packages\tensorboard\main.py --logdir=../trainOutput
 
