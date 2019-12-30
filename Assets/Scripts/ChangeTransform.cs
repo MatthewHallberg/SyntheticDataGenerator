@@ -2,7 +2,7 @@
 
 public class ChangeTransform : MonoBehaviour, IChangeable {
 
-    const int MAX_ANGLE = 15;
+    const int MAX_ANGLE = 30;
 
     Vector3 startPosition;
     Vector3 startAngle;
@@ -14,8 +14,8 @@ public class ChangeTransform : MonoBehaviour, IChangeable {
 
     public void ChangeRandom() {
 
-        //choose random position on screen
-        Vector3 randScreenPos = new Vector3(Random.Range(.15f, .85f), Random.Range(.4f, 1.2f), startPosition.z + Random.Range(0, 4));
+        //choose random position on screen (these numbers are not 1 -0 because the origin of my models was not in the center and I never change it)
+        Vector3 randScreenPos = new Vector3(Random.Range(.1f, .9f), Random.Range(.6f, .9f), startPosition.z + Random.Range(.5f, 4.5f));
         transform.position = Camera.main.ViewportToWorldPoint(randScreenPos);
 
         //handle random rotation

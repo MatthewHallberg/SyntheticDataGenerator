@@ -6,7 +6,7 @@ public class ChangeWindow : MonoBehaviour, IChangeable {
     public void ChangeRandom() {
         Rect R = GetMainGameView().position;
         R.width = Random.Range(720,1440);
-        R.height = R.width / Random.Range(1.5f, 2.5f);
+        R.height = R.width / Random.Range(1f, 2.5f);
         GetMainGameView().position = R;
     }
 

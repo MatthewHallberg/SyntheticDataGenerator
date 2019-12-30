@@ -8,6 +8,7 @@ public class RandoTextures : Singleton<RandoTextures> {
     protected override void Awake() {
         base.Awake();
         textures = Resources.LoadAll("Textures", typeof(Texture));
+        Shuffle(textures);
     }
 
     public Texture GetRandomTexture() {
@@ -17,5 +18,14 @@ public class RandoTextures : Singleton<RandoTextures> {
             texNum = 0;
         }
         return textures[texNum] as Texture;
+    }
+
+    void Shuffle(Object[] items) {
+        for (int t = 0; t < items.Length; t++) {
+            Object tmp = items[t];
+            int r = Random.Range(t, items.Length);
+            items[t] = items[r];
+            items[r] = tmp;
+        }
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectController : Singleton<ObjectController> {
 
+    const float PERCENT_OVERLAP = .40f;
+
     public void ActivateObjects() {
         foreach (Transform child in transform) {
             child.gameObject.SetActive(true);
@@ -11,7 +13,7 @@ public class ObjectController : Singleton<ObjectController> {
     }
 
     public Dictionary<GameObject, Rect> GetObjects() {
-        DeactivateOverlap();
+        CheckForOverlap();
         return GetActiveObjects();
     }
 
@@ -29,7 +31,7 @@ public class ObjectController : Singleton<ObjectController> {
         return currObjects;
     }
 
-    void DeactivateOverlap() {
+    void CheckForOverlap() {
 
         Dictionary<GameObject, Rect> currObjects = GetActiveObjects();
 
@@ -42,11 +44,26 @@ public class ObjectController : Singleton<ObjectController> {
         foreach (KeyValuePair<GameObject, Rect> obj1 in currObjects) {
             if (obj1.Key.activeSelf) {
                 foreach (KeyValuePair<GameObject, Rect> obj2 in currObjects) {
-                    if (obj1.Key != obj2.Key && obj1.Key.activeSelf && obj1.Value.Overlaps(obj2.Value)) {
+                    if (obj1.Key != obj2.Key && obj1.Key.activeSelf && isOverlapping(obj1.Value, obj2.Value)) {
                         obj2.Key.SetActive(false);
                     }
                 }
             }
+        }
+    }
+
+    bool isOverlapping(Rect rect1, Rect rect2) {
+        if (rect1.Overlaps(rect2)) {
+
+            float area1 = Mathf.Abs(rect1.min.x - rect1.max.x) * Mathf.Abs(rect1.min.y - rect1.max.y);
+            float area2 = Mathf.Abs(rect2.min.x - rect2.max.x) * Mathf.Abs(rect2.min.y - rect2.max.y);
+
+            float areaI = (Mathf.Min(rect1.max.x, rect2.max.x) - Mathf.Max(rect1.min.x, rect2.min.x)) * (Mathf.Min(rect1.max.y, rect2.max.y) - Mathf.Max(rect1.min.y, rect2.min.y));
+            float percentOverlap = areaI / Mathf.Min(area1, area2);
+
+            return percentOverlap > PERCENT_OVERLAP;
+        } else {
+            return false;
         }
     }
 }
