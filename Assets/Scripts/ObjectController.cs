@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectController : Singleton<ObjectController> {
 
-    const float PERCENT_OVERLAP = .40f;
+    const float PERCENT_OVERLAP = .25f;
 
     public void ActivateObjects() {
         foreach (Transform child in transform) {
