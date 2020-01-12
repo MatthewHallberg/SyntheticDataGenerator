@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(RawImage))]
 public class ChangeTexture : MonoBehaviour, IChangeable {
 
-    RawImage rawImage;
-
-    void Start() {
-        rawImage = GetComponent<RawImage>();
-    }
+    public Material backgroundMat;
 
     public void ChangeRandom() {
-        rawImage.texture = RandoTextures.Instance.GetRandomTexture();
+        backgroundMat.SetTexture("_BaseMap", RandoTextures.Instance.GetRandomTexture());
     }
 }

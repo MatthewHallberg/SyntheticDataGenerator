@@ -6,7 +6,7 @@ public class ChangeAmbient : MonoBehaviour, IChangeable {
 
     public void ChangeRandom() {
         Color lightColor = Color.white;
-        lightColor *= Random.Range(.6f, 1.4f);
+        lightColor *= Random.Range(.5f, 1.5f);
         RenderSettings.ambientLight = lightColor;
     }
 }
