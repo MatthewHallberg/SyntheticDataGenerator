@@ -2,7 +2,7 @@
 
 public class ChangeTransform : MonoBehaviour, IChangeable {
 
-    const int MAX_ANGLE = 25;
+    const int MAX_ANGLE = 20;
 
     Vector3 startPosition;
     Vector3 startAngle;

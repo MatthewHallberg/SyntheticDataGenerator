@@ -27,7 +27,7 @@ PATH_TO_CKPT = MODEL_FOLDER + '/frozen_inference_graph.pb'
 # List of the strings that is used to add correct label for each box.
 PATH_TO_LABELS = '../labelmap.pbtxt'
 
-NUM_CLASSES = 4
+NUM_CLASSES = 3
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
