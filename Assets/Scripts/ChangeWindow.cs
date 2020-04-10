@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
 public class ChangeWindow : MonoBehaviour, IChangeable {
 
@@ -11,9 +12,7 @@ public class ChangeWindow : MonoBehaviour, IChangeable {
     }
 
    EditorWindow GetMainGameView() {
-        System.Type T = System.Type.GetType("UnityEditor.GameView,UnityEditor");
-        System.Reflection.MethodInfo GetMainGameView = T.GetMethod("GetMainGameView", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        System.Object Res = GetMainGameView.Invoke(null, null);
-        return (EditorWindow)Res;
+        EditorWindow[] windows = Resources.FindObjectsOfTypeAll<EditorWindow>();
+        return windows.FirstOrDefault(e => e.titleContent.text.Contains("Game"));
     }
 }

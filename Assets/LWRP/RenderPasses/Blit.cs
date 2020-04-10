@@ -3,12 +3,12 @@ using UnityEngine.Serialization;
 
 namespace UnityEngine.Rendering.LWRP
 {
-    public class Blit : ScriptableRendererFeature
+    public class Blit : UnityEngine.Rendering.Universal.ScriptableRendererFeature
     {
         [System.Serializable]
         public class BlitSettings
         {
-            public RenderPassEvent Event = RenderPassEvent.AfterRenderingOpaques;
+            public UnityEngine.Rendering.Universal.RenderPassEvent Event = UnityEngine.Rendering.Universal.RenderPassEvent.AfterRenderingOpaques;
             
             public Material blitMaterial = null;
             public int blitMaterialPassIndex = -1;
@@ -23,7 +23,7 @@ namespace UnityEngine.Rendering.LWRP
         }
 
         public BlitSettings settings = new BlitSettings();
-        RenderTargetHandle m_RenderTextureHandle;
+        UnityEngine.Rendering.Universal.RenderTargetHandle m_RenderTextureHandle;
 
         BlitPass blitPass;
 
@@ -35,10 +35,10 @@ namespace UnityEngine.Rendering.LWRP
             m_RenderTextureHandle.Init(settings.textureId);
         }
 
-        public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+        public override void AddRenderPasses(UnityEngine.Rendering.Universal.ScriptableRenderer renderer, ref UnityEngine.Rendering.Universal.RenderingData renderingData)
         {
             var src = renderer.cameraColorTarget;
-            var dest = (settings.destination == Target.Color) ? RenderTargetHandle.CameraTarget : m_RenderTextureHandle;
+            var dest = (settings.destination == Target.Color) ? UnityEngine.Rendering.Universal.RenderTargetHandle.CameraTarget : m_RenderTextureHandle;
 
             if (settings.blitMaterial == null)
             {
