@@ -17,6 +17,7 @@ public class RandoTextures : Singleton<RandoTextures> {
         } else {
             texNum = 0;
         }
+        print(textures[texNum].name);
         return textures[texNum] as Texture;
     }
 

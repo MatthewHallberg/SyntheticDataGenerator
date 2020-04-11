@@ -1,10 +1,6 @@
 ﻿using System.Linq;
 using UnityEditor;
-<<<<<<< HEAD
-using System.Linq;
-=======
 using UnityEngine;
->>>>>>> 1073e6df3d66cd9a46a884fbe4d3205d154a34bc
 
 public class ChangeWindow : MonoBehaviour, IChangeable {
 

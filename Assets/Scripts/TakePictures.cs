@@ -6,12 +6,8 @@ using UnityEngine;
 public class TakePictures : MonoBehaviour {
 
     const bool SHOW_BOXES = false;
-<<<<<<< HEAD
     const int TOTAL_IMAGES = 10;
     const float TEST_IMAGE_PERCENT = .2f;
-=======
-    const int TOTAL_IMAGES = 10;      
->>>>>>> 1073e6df3d66cd9a46a884fbe4d3205d154a34bc
 
     int testNum;
     int imageNum = 1;
