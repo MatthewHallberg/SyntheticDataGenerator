@@ -6,7 +6,8 @@ using UnityEngine;
 public class TakePictures : MonoBehaviour {
 
     const bool SHOW_BOXES = false;
-    const int TOTAL_IMAGES = 5000;      
+    const int TOTAL_IMAGES = 10;
+    const float TEST_IMAGE_PERCENT = .2f;
 
     int testNum;
     int imageNum = 1;
@@ -22,7 +23,7 @@ public class TakePictures : MonoBehaviour {
         CreateDirectories();
         CreateLabelFiles();
         CreateLabelMap();
-        testNum = Mathf.RoundToInt(TOTAL_IMAGES * .20f);
+        testNum = Mathf.RoundToInt(TOTAL_IMAGES * TEST_IMAGE_PERCENT);
     }
 
     void Update() {
