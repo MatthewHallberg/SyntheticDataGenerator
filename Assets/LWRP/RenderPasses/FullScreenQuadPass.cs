@@ -1,6 +1,6 @@
 ﻿namespace UnityEngine.Rendering.LWRP
 {
-    public class FullScreenQuadPass : ScriptableRenderPass
+    public class FullScreenQuadPass : UnityEngine.Rendering.Universal.ScriptableRenderPass
     {
         string m_ProfilerTag = "DrawFullScreenPass";
 
@@ -12,13 +12,13 @@
             m_Settings = settings;
         }
 
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+        public override void Execute(ScriptableRenderContext context, ref UnityEngine.Rendering.Universal.RenderingData renderingData)
         {
             Camera camera = renderingData.cameraData.camera;
 
             var cmd = CommandBufferPool.Get(m_ProfilerTag);
             cmd.SetViewProjectionMatrices(Matrix4x4.identity, Matrix4x4.identity);
-            cmd.DrawMesh(RenderingUtils.fullscreenMesh, Matrix4x4.identity, m_Settings.material);
+            cmd.DrawMesh(UnityEngine.Rendering.Universal.RenderingUtils.fullscreenMesh, Matrix4x4.identity, m_Settings.material);
             cmd.SetViewProjectionMatrices(camera.worldToCameraMatrix, camera.projectionMatrix);
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
